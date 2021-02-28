@@ -1,0 +1,37 @@
+name: "Megaphone API CI"
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+  push:
+    paths:
+      - 'src/megaphone.api/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/megaphone.api/**'
+
+jobs:
+   build:
+    name: Megaphone CI
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: '5.0.103'
+        source-url: https://nuget.pkg.github.com/AlexandreBrisebois/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: restore
+      run: dotnet restore "./src/megaphone.api.sln"
+
+    - name: build
+      run: dotnet build "./src/megaphone.api.sln" --no-restore -c Release
