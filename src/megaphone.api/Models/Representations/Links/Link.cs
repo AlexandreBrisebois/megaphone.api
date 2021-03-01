@@ -1,7 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Microsoft.AspNetCore.Http.Connections;
-using System.Net.Http;
-using System.Net.NetworkInformation;
+﻿using System.Net.Http;
 using System.Text.Json.Serialization;
 
 namespace Megaphone.API.Models.Representations.Links

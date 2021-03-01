@@ -26,7 +26,7 @@ namespace megaphone.api.Controllers
         {
             var e = CommandFactory.MakeAddFeedEvent(newFeed.Url);
 
-            await daprClient.InvokeBindingAsync("feed-events", "create", e);
+            await daprClient.InvokeBindingAsync("feed-requests", "create", e);
 
             return Accepted();
         }
@@ -37,7 +37,7 @@ namespace megaphone.api.Controllers
         {
             var e = CommandFactory.MakeDeleteFeedEvent(id);
 
-            await daprClient.InvokeBindingAsync("feed-events", "create", e);
+            await daprClient.InvokeBindingAsync("feed-requests", "create", e);
 
             return Accepted();
         }
@@ -46,7 +46,7 @@ namespace megaphone.api.Controllers
         [HttpPut]
         public async Task<IActionResult> PutAsync(FeedListView view)
         {
-            await daprClient.SaveStateAsync("api-state-store", "list", view);
+            await daprClient.SaveStateAsync("api-state", "list", view);
             return Ok();
         }
 
@@ -54,7 +54,7 @@ namespace megaphone.api.Controllers
         [HttpGet]
         public async Task<JsonResult> GetAsync()
         {
-            var view = await daprClient.GetStateAsync<FeedListView>("api-state-store", "list");
+            var view = await daprClient.GetStateAsync<FeedListView>("api-state", "list");
             if (view == null)
                 view = new FeedListView() { Feeds = new List<FeedView>() };
 

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Dapr.Client;
+﻿using Dapr.Client;
 using Megaphone.Api.Models.Views;
 using Megaphone.Standard.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Megaphone.Api.Services
 {
