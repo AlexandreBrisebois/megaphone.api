@@ -1,0 +1,11 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: crawl-requests
+spec:
+  type: bindings.redis
+  metadata:
+  - name: redisHost
+    value: dapr_redis:6379
+  - name: redisPassword
+    value: ""

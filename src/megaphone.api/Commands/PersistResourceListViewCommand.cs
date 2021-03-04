@@ -1,8 +1,9 @@
 ﻿using Megaphone.Api.Models.Views;
 using Megaphone.Standard.Commands;
 using Megaphone.Standard.Services;
-using System;
 using System.Threading.Tasks;
+using System;
+using System.Diagnostics;
 
 namespace Megaphone.Api.Commands
 {
@@ -22,6 +23,9 @@ namespace Megaphone.Api.Commands
         public async Task ApplyAsync(IPartionedStorageService<ResourceListView> model)
         {
             await model.SetAsync(partitionKey, CONTENT_KEY, view);
+
+            if (Debugger.IsAttached)
+                    Console.WriteLine($"updated : \"{partitionKey}\"");
         }
     }
 }

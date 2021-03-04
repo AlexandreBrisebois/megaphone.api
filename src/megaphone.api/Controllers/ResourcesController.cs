@@ -25,8 +25,8 @@ namespace Megaphone.Api.Controllers
         }
 
         [Route("")]
-        [HttpPut]
-        public async Task<IActionResult> PutAsync(ResourceListView view)
+        [HttpPost]
+        public async Task<IActionResult> PostAsync(ResourceListView view)
         {
             var c = new PersistResourceListViewCommand(view.Date, view);
             await c.ApplyAsync(storageService);

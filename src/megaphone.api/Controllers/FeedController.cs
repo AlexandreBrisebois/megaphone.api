@@ -1,4 +1,6 @@
 ﻿using Dapr.Client;
+using System;
+using System.Diagnostics;
 using Megaphone.Api.Events;
 using Megaphone.Api.Models;
 using Megaphone.Api.Models.Representations;
@@ -47,6 +49,10 @@ namespace megaphone.api.Controllers
         public async Task<IActionResult> PutAsync(FeedListView view)
         {
             await daprClient.SaveStateAsync("api-state", "list", view);
+
+            if (Debugger.IsAttached)
+                    Console.WriteLine("updated : \"feed list\"");
+
             return Ok();
         }
 

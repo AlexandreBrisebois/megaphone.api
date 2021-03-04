@@ -1,0 +1,14 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: feed-state
+spec:
+  type: state.sqlserver
+  version: v1
+  metadata:
+  - name: connectionString
+    value: "Server=HD;Database=megaphone;User Id=sa;Password=Qwerty1!;"
+  - name: tableName
+    value: "feed_state"
+  - name: keyType 
+    value: "string"
