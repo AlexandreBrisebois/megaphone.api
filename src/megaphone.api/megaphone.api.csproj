@@ -6,11 +6,13 @@
     <DockerfileContext>.</DockerfileContext>
     <AssemblyName>megaphone.api</AssemblyName>
     <RootNamespace>Megaphone.Api</RootNamespace>
+    <UserSecretsId>64b41baa-38f3-4793-a320-25720477989c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapr.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Megaphone.Standard" Version="1.0.7" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
   </ItemGroup>
