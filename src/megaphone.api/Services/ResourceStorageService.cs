@@ -25,7 +25,7 @@ namespace Megaphone.Api.Services
             var (value, etag) = await client.GetStateAndETagAsync<ResourceListView>(STATE_STORE, key);
             trackedEtags[key] = etag;
 
-            return value ?? new ResourceListView();
+            return value;
         }
 
         public async Task SetAsync(string partitionKey, string contentKey, ResourceListView content)

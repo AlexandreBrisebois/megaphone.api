@@ -9,17 +9,19 @@ namespace Megaphone.Api.Queries
     internal class GetResourceListQuery : IQuery<IPartionedStorageService<ResourceListView>, ResourceListView>
     {
         const string CONTENT_KEY = "resources.json";
+        private readonly DateTime date;
         string partitionKey = string.Empty;
 
         public GetResourceListQuery(DateTime date)
         {
             partitionKey = $"{date.Year}/{date.Month}/{date.Day}";
+            this.date = date;
         }
 
         public async Task<ResourceListView> ExecuteAsync(IPartionedStorageService<ResourceListView> model)
         {
             var view = await model.GetAsync(partitionKey, CONTENT_KEY);
-            return view ?? new ResourceListView();
+            return view ?? new ResourceListView() { Date = this.date };
         }
     }
 }
