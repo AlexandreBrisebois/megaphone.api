@@ -39,7 +39,9 @@ namespace Megaphone.Api.Controllers
         [HttpGet]
         public async Task<ResourceListRepresentation> GetResourcesByDateAsync(int year, int month, int day)
         {
-            var q = new GetResourceListQuery(new DateTime(year, month, day));
+            DateTime date = new DateTime(year, month, day);
+
+            var q = new GetResourceListQuery(date);
             var view = await q.ExecuteAsync(storageService);
 
             var r = RepresentationFactory.MakeResourceListRepresentation(view);
