@@ -6,6 +6,7 @@ using Megaphone.Api.Queries;
 using Megaphone.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,23 +37,27 @@ namespace Megaphone.Api.Controllers
 
         [Route("{year}/{month}/{day}")]
         [HttpGet]
-        public async Task<JsonResult> GetResourcesByDateAsync(int year, int month, int day)
+        public async Task<ResourceListRepresentation> GetResourcesByDateAsync(int year, int month, int day)
         {
             var q = new GetResourceListQuery(new DateTime(year, month, day));
             var view = await q.ExecuteAsync(storageService);
 
             var r = RepresentationFactory.MakeResourceListRepresentation(view);
 
-            return new JsonResult(r);
+            return r;
         }
 
         [Route("{year}/{month}")]
         [HttpGet]
-        public async Task<JsonResult> GetResourcesByMonthAsync(int year, int month)
+        public async Task<List<ResourceListRepresentation>> GetResourcesByMonthAsync(int year, int month)
         {
             DateTime date = new DateTime(year, month, 1);
 
-            var dates = Enumerable.Range(0, 31).Select(i => date.Add(TimeSpan.FromDays(i))).Where(d => d.Month == date.Month && d <= DateTimeOffset.UtcNow).ToList();
+            var dates = Enumerable.Range(0, 31)
+                                  .Select(i => date.Add(TimeSpan.FromDays(i)))
+                                  .Where(d => d.Month == date.Month && d <= DateTimeOffset.UtcNow)
+                                  .ToList();
+          
             var r = await Task.WhenAll(dates.Select(async d =>
             {
                 var q = new GetResourceListQuery(d);
@@ -61,19 +66,21 @@ namespace Megaphone.Api.Controllers
                 return view;
             }));
 
-            return new JsonResult(r.Where(v => v.Resources.Any()).Select(v => RepresentationFactory.MakeResourceListRepresentation(v)));
+            return r.Where(v => v.Resources.Any())
+                    .Select(v => RepresentationFactory.MakeResourceListRepresentation(v))
+                    .ToList();
         }
 
         [Route("")]
         [HttpGet]
-        public async Task<JsonResult> GetTodaysResourcesAsync()
+        public async Task<ResourceListRepresentation> GetTodaysResourcesAsync()
         {
             var q = new GetResourceListQuery(DateTime.UtcNow);
             var view = await q.ExecuteAsync(storageService);
 
             var r = RepresentationFactory.MakeResourceListRepresentation(view);
 
-            return new JsonResult(r);
+            return r;
         }
     }
 }

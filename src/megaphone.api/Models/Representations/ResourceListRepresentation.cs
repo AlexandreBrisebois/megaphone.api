@@ -11,15 +11,15 @@ namespace Megaphone.Api.Models.Representations
         public ResourceListRepresentation(DateTime date)
         {
             Date = date;
-            AddLink(Relations.Self, $"api/resources{date.Year}/{date.Month}/{date.Day}");
+            AddLink(Relations.Self, $"api/resources/{date.Year}/{date.Month}/{date.Day}");
 
             var previousDate = date.Subtract(TimeSpan.FromDays(1d));
-            AddLink(Relations.Previous, $"api/resources{previousDate.Year}/{previousDate.Month}/{previousDate.Day}");
+            AddLink(Relations.Previous, $"api/resources/{previousDate.Year}/{previousDate.Month}/{previousDate.Day}");
 
             if (date.Date != DateTimeOffset.UtcNow.Date)
             {
                 var nextDate = date.Add(TimeSpan.FromDays(1d));
-                AddLink(Relations.Next, $"api/resources{nextDate.Year}/{nextDate.Month}/{nextDate.Day}");
+                AddLink(Relations.Next, $"api/resources/{nextDate.Year}/{nextDate.Month}/{nextDate.Day}");
             }
         }
 

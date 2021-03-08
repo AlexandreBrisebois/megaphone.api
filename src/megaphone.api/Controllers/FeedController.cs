@@ -58,7 +58,7 @@ namespace megaphone.api.Controllers
 
         [Route("")]
         [HttpGet]
-        public async Task<JsonResult> GetAsync()
+        public async Task<FeedListRepresentation> GetAsync()
         {
             var view = await daprClient.GetStateAsync<FeedListView>("api-state", "list");
             if (view == null)
@@ -66,7 +66,7 @@ namespace megaphone.api.Controllers
 
             var r = RepresentationFactory.MakeFeedListRepresentation(view);
 
-            return new JsonResult(r);
+            return r;
         }
     }
 }
